@@ -146,7 +146,7 @@ const HeroSection = () => {
           className="relative overflow-hidden"
         >
           <img
-            src="/images/about2.png"
+            src="/images/teamPicture.jpeg"
             alt="ShopAm Team"
             className="w-full max-h-[670px] transition-transform duration-300 group-hover:scale-105"
           />
