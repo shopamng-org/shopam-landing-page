@@ -41,7 +41,7 @@ const TypingText: React.FC<TypingTextProps> = ({
           setDisplayText((prev) => prev + text[currentIndex]);
           setCurrentIndex((prev) => prev + 1);
         },
-        currentIndex === 0 ? 200 : speed
+        currentIndex === 0 ? 200 : speed,
       );
 
       return () => clearTimeout(timeout);

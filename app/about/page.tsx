@@ -345,7 +345,7 @@ const MissionSection = () => {
 const VisionSection = () => {
   const { ref, isVisible } = useScrollAnimation();
   const shouldReduceMotion = useReducedMotion();
-  const [isHovered, setIsHovered] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);q
 
   return (
     <motion.section

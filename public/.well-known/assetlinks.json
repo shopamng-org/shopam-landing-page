@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.shopam.live",
+      "sha256_cert_fingerprints": [
+        "DF:84:D3:B9:0E:20:8D:4F:3B:0D:2C:4A:90:09:21:49:A5:A8:5C:6E:65:FA:8A:88:59:89:10:71:E1:16:AB:A5"
+      ]
+    }
+  }
+]
