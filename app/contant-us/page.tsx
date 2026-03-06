@@ -207,7 +207,7 @@ export default function ContactPage() {
                 icon={<CustomPhoneIcon />}
                 title="Phone"
                 description="Speak to our team for support."
-                action="+234 8142908724"
+                action="+447533524726"
                 actionLink="tel:  +447533524726"
               />
             </div>
