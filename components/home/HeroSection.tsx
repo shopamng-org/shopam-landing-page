@@ -42,21 +42,6 @@ const fadeInUpVariants: Variants = {
   },
 };
 
-const fadeInLeftVariants: Variants = {
-  hidden: {
-    opacity: 0,
-    x: -50,
-  },
-  visible: {
-    opacity: 1,
-    x: 0,
-    transition: {
-      duration: 0.8,
-      ease: "easeOut",
-    },
-  },
-};
-
 const staggerContainerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
@@ -278,7 +263,7 @@ const AppStoreButton = memo<AppStoreButtonProps>(
         {children}
       </Link>
     </motion.div>
-  )
+  ),
 );
 
 AppStoreButton.displayName = "AppStoreButton";
@@ -383,7 +368,7 @@ const AnimatedCounter = memo<{ value: string; suffix?: string }>(
         {suffix}
       </motion.span>
     );
-  }
+  },
 );
 
 AnimatedCounter.displayName = "AnimatedCounter";

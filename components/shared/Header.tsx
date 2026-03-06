@@ -34,10 +34,6 @@ export default function ShopAmHeader() {
     setIsOpen(open);
   }, []);
 
-  const handleLinkClick = useCallback(() => {
-    setIsOpen(false);
-  }, []);
-
   const handleNavClick = useCallback(
     (href: string, isPageLink: boolean) => {
       if (isPageLink) {
@@ -56,7 +52,7 @@ export default function ShopAmHeader() {
       }
       setIsOpen(false);
     },
-    [scrollToHash, router, pathname]
+    [scrollToHash, router, pathname],
   );
 
   const handleDownloadAppClick = useCallback(() => {

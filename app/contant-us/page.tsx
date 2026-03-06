@@ -135,7 +135,7 @@ export default function ContactPage() {
   });
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -178,7 +178,7 @@ export default function ContactPage() {
                 icon={<CustomMessageCircleIcon />}
                 title="Email"
                 description="Stay updated and get in touch directly."
-                action="hello@shopam.com"
+                action="hello@shopam.org"
                 actionLink="mailto:hello@shopam.com"
               />
 
@@ -187,7 +187,7 @@ export default function ContactPage() {
                 icon={<CustomMapIcon />}
                 title="Office"
                 description="Visit or write to us at:"
-                action=""
+                action="15, brownstone estate , kusenla , Lagos , Nigeria"
               />
             </div>
 
@@ -208,7 +208,7 @@ export default function ContactPage() {
                 title="Phone"
                 description="Speak to our team for support."
                 action="+234 8142908724"
-                actionLink="tel:+2348142908724"
+                actionLink="tel:  +447533524726"
               />
             </div>
 
