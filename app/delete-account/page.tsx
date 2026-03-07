@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { OTPRequestForm } from "@/components/delete-account/OTPRequestForm";
 import { OTPVerificationForm } from "@/components/delete-account/OTPVerificationForm";
 import { SuccessState } from "@/components/delete-account/SuccessState";
@@ -11,7 +11,7 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { ShieldCheck, Info, ChevronRight, CheckCircle2 } from "lucide-react";
+import { ShieldCheck, Info, CheckCircle2 } from "lucide-react";
 
 type DeletionStep = "REQUEST" | "VERIFY" | "SUCCESS";
 
@@ -27,9 +27,11 @@ export default function DeleteAccountPage() {
     try {
       await requestDeletionOtp({ destination });
       setStep("VERIFY");
-    } catch (err: any) {
+    } catch (err: unknown) {
       setError(
-        err.message || "An unexpected error occurred. Please try again.",
+        err instanceof Error
+          ? err.message
+          : "An unexpected error occurred. Please try again.",
       );
     } finally {
       setIsLoading(false);
@@ -42,8 +44,12 @@ export default function DeleteAccountPage() {
     try {
       await verifyOtpAndDelete({ destination, code });
       setStep("SUCCESS");
-    } catch (err: any) {
-      setError(err.message || "Invalid or expired verification code.");
+    } catch (err: unknown) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Invalid or expired verification code.",
+      );
     } finally {
       setIsLoading(false);
     }
@@ -53,7 +59,7 @@ export default function DeleteAccountPage() {
     setError(null);
     try {
       await requestDeletionOtp({ destination });
-    } catch (err: any) {
+    } catch {
       setError("Failed to resend code. Please try again later.");
     }
   };
@@ -90,31 +96,6 @@ export default function DeleteAccountPage() {
           className="absolute top-[30%] left-[15%] w-64 h-64 bg-[#ED8123]/5 rounded-[4rem] blur-[80px]"
         />
       </div>
-
-      {/* Navigation Layer */}
-      <header className="w-full h-24 px-8 sm:px-16 flex items-center justify-between bg-white/50 backdrop-blur-xl border-b border-gray-100/80 sticky top-0 z-100">
-        <Link href="/">
-          <div className="relative w-40 h-12 cursor-pointer transition-transform duration-300 hover:scale-105 active:scale-95">
-            <Image
-              src="/images/shopAm_logo.png"
-              alt="Shopam Logo"
-              fill
-              className="object-contain"
-            />
-          </div>
-        </Link>
-        <div className="flex items-center gap-8">
-          <Link
-            href="/"
-            className="hidden sm:block text-[11px] font-black uppercase tracking-[0.2em] text-gray-500 hover:text-black transition-all"
-          >
-            Home
-          </Link>
-          <div className="w-10 h-10 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center">
-            <ShieldCheck className="w-5 h-5 text-gray-400" />
-          </div>
-        </div>
-      </header>
 
       {/* Main Content Area */}
       <main className="grow flex flex-col items-center justify-center p-6 md:p-12 lg:p-24 relative">
@@ -280,48 +261,6 @@ export default function DeleteAccountPage() {
           </AnimatePresence>
         </div>
       </main>
-
-      {/* Footer Branding */}
-      <footer className="w-full py-16 px-8 sm:px-16 border-t border-gray-50 bg-white/30 backdrop-blur-md">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-12">
-          <div className="space-y-4 text-center md:text-left">
-            <div className="relative w-32 h-8 grayscale opacity-50 mx-auto md:mx-0">
-              <Image
-                src="/images/shopAm_logo.png"
-                alt="Shopam Logo"
-                fill
-                className="object-contain"
-              />
-            </div>
-            <p className="text-[10px] text-gray-400 font-bold uppercase tracking-[0.2em] font-termina">
-              &copy; 2025 Global Commerce Solutions
-            </p>
-          </div>
-
-          <nav className="flex flex-wrap justify-center gap-x-12 gap-y-4">
-            <Link
-              href="/privacy-policy"
-              className="text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-[#f8811a] transition-all"
-            >
-              Privacy
-            </Link>
-            <Link
-              href="/terms-and-conditions"
-              className="text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-[#f8811a] transition-all"
-            >
-              Terms
-            </Link>
-            <Link
-              href="/contant-us"
-              className="text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-[#f8811a] transition-all"
-            >
-              Support
-            </Link>
-          </nav>
-        </div>
-      </footer>
-
-      {/* Global Scroll Progress or similar micro-UI could go here */}
     </div>
   );
 }

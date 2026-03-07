@@ -1,6 +1,6 @@
 const BASE_URL = "https://api.shopam.org/api";
 
-export interface ApiResponse<T = any> {
+export interface ApiResponse<T = unknown> {
   message: string;
   data: T;
   statusCode: number;

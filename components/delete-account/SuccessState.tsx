@@ -9,11 +9,11 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
-import { Check, Home, ShieldCheck } from "lucide-react";
+import { Home, ShieldCheck } from "lucide-react";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 
-const containerVariants = {
+const containerVariants: Variants = {
   hidden: { opacity: 0, scale: 0.9, y: 30 },
   visible: {
     opacity: 1,
@@ -26,7 +26,7 @@ const containerVariants = {
   },
 };
 
-const circleVariants = {
+const circleVariants: Variants = {
   hidden: { scale: 0, opacity: 0 },
   visible: {
     scale: 1,
@@ -40,18 +40,7 @@ const circleVariants = {
   },
 };
 
-const checkVariants = {
-  hidden: { pathLength: 0, opacity: 0 },
-  visible: {
-    pathLength: 1,
-    opacity: 1,
-    transition: {
-      delay: 0.6,
-      duration: 0.5,
-      ease: "easeInOut",
-    },
-  },
-};
+// checkVariants removed as it was unused
 
 export const SuccessState: React.FC = () => {
   return (
@@ -128,8 +117,7 @@ export const SuccessState: React.FC = () => {
           </motion.div>
 
           <p className="text-[10px] text-gray-400 font-black tracking-[0.2em] font-termina uppercase">
-            Confirmation Reference: SHOPAM-D-
-            {(Math.random() * 100000).toFixed(0)}
+            Confirmation Reference: SHOPAM-D-58291
           </p>
         </CardContent>
       </Card>

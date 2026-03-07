@@ -10,7 +10,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Loader2, ArrowLeft, ShieldAlert, Timer } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, Variants } from "framer-motion";
 import {
   InputOTP,
   InputOTPGroup,
@@ -26,7 +26,7 @@ interface OTPVerificationFormProps {
   error: string | null;
 }
 
-const containerVariants = {
+const containerVariants: Variants = {
   hidden: { opacity: 0, scale: 0.95 },
   visible: {
     opacity: 1,
@@ -39,7 +39,7 @@ const containerVariants = {
   },
 };
 
-const itemVariants = {
+const itemVariants: Variants = {
   hidden: { opacity: 0, y: 15 },
   visible: { opacity: 1, y: 0 },
 };
@@ -53,25 +53,21 @@ export const OTPVerificationForm: React.FC<OTPVerificationFormProps> = ({
   error,
 }) => {
   const [value, setValue] = useState("");
-  const [canResend, setCanResend] = useState(false);
   const [timer, setTimer] = useState(60);
 
+  const canResend = timer === 0;
+
   useEffect(() => {
-    let interval: NodeJS.Timeout;
-    if (timer > 0) {
-      interval = setInterval(() => {
-        setTimer((prev) => prev - 1);
-      }, 1000);
-    } else {
-      setCanResend(true);
-    }
-    return () => clearInterval(interval);
+    if (timer === 0) return;
+    const timeout = setTimeout(() => {
+      setTimer((prev) => prev - 1);
+    }, 1000);
+    return () => clearTimeout(timeout);
   }, [timer]);
 
   const handleResend = () => {
     if (canResend) {
       onResendOTP();
-      setCanResend(false);
       setTimer(60);
       setValue("");
     }
