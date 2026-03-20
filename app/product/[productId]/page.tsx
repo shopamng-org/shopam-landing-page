@@ -20,7 +20,7 @@ export default function ProductRedirectPage() {
     if (!productId) return;
 
     // 1️⃣ Construct the deep link
-    const appLink = `shopam://product/${productId}`;
+    const appLink = `shopam://profile/product/${productId}`;
 
     // 2️⃣ Fallback to Play Store if app not installed
     const storeLink =

@@ -16,6 +16,14 @@ export default function ReferralPage() {
     : params.referralId;
   const [status, setStatus] = useState("Redirecting you to the ShopAm app...");
 
+  const userAgent = navigator.userAgent || navigator.vendor;
+  console.log("userAgent", userAgent);
+
+  const isAndroid = /android/i.test(userAgent);
+  const isIOS = /iPad|iPhone|iPod/.test(userAgent);
+
+  console.log("isAndroid", isAndroid);
+  console.log("isIOS", isIOS);
   useEffect(() => {
     if (!referralId) return;
 
@@ -27,15 +35,15 @@ export default function ReferralPage() {
       "https://play.google.com/store/apps/details?id=com.shopam.live";
 
     // Attempt to open the app
-    window.location.assign(appLink);
+    // window.location.assign(appLink);
 
     // Fallback after 1500ms
-    const timeout = setTimeout(() => {
-      setStatus("Opening Play Store...");
-      window.location.href = storeLink;
-    }, 2000);
+    // const timeout = setTimeout(() => {
+    //   setStatus("Opening Play Store...");
+    //   window.location.href = storeLink;
+    // }, 2000);
 
-    return () => clearTimeout(timeout);
+    // return () => clearTimeout(timeout);
   }, [referralId]);
 
   return (
@@ -44,12 +52,14 @@ export default function ReferralPage() {
       <h1 className="text-lg font-medium text-gray-800">{status}</h1>
       <p className="mt-2 text-sm text-gray-500">
         If you are not redirected,{" "}
-        <a
-          href="https://play.google.com/store/apps/details?id=com.shopam.live"
-          className="text-orange-600 underline"
-        >
-          click here
-        </a>
+        {isAndroid && (
+          <a
+            href="https://play.google.com/store/apps/details?id=com.shopam.live"
+            className="text-orange-600 underline"
+          >
+            click here
+          </a>
+        )}
         .
       </p>
     </div>
