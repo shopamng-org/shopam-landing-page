@@ -35,15 +35,15 @@ export default function ReferralPage() {
       "https://play.google.com/store/apps/details?id=com.shopam.live";
 
     // Attempt to open the app
-    // window.location.assign(appLink);
+    window.location.assign(appLink);
 
     // Fallback after 1500ms
-    // const timeout = setTimeout(() => {
-    //   setStatus("Opening Play Store...");
-    //   window.location.href = storeLink;
-    // }, 2000);
+    const timeout = setTimeout(() => {
+      setStatus("Opening Play Store...");
+      window.location.href = storeLink;
+    }, 2000);
 
-    // return () => clearTimeout(timeout);
+    return () => clearTimeout(timeout);
   }, [referralId]);
 
   return (
@@ -52,14 +52,12 @@ export default function ReferralPage() {
       <h1 className="text-lg font-medium text-gray-800">{status}</h1>
       <p className="mt-2 text-sm text-gray-500">
         If you are not redirected,{" "}
-        {isAndroid && (
-          <a
-            href="https://play.google.com/store/apps/details?id=com.shopam.live"
-            className="text-orange-600 underline"
-          >
-            click here
-          </a>
-        )}
+        <a
+          href="https://play.google.com/store/apps/details?id=com.shopam.live"
+          className="text-orange-600 underline"
+        >
+          click here
+        </a>
         .
       </p>
     </div>
