@@ -17,7 +17,7 @@ export default function BuyerOrderRedirectPage() {
     if (!orderId) return;
 
     // 1️⃣ Construct the deep link
-    const appLink = `shopam://order/buyer/${orderId}`;
+    const appLink = `shopam://orders/purchaseOrder/${orderId}`;
 
     // 2️⃣ Fallback to Play Store if app not installed
     const storeLink = "https://play.google.com/store/apps/details?id=com.shopam.live";

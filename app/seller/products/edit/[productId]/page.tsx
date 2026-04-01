@@ -17,7 +17,7 @@ export default function EditSellerProductRedirectPage() {
     if (!productId) return;
 
     // 1️⃣ Construct the deep link
-    const appLink = `shopam://seller/products/edit/${productId}`;
+    const appLink = `shopam://profile/seller/updateProduct?productId=${productId}`;
 
     // 2️⃣ Fallback to Play Store if app not installed
     const storeLink = "https://play.google.com/store/apps/details?id=com.shopam.live";

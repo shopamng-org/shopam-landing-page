@@ -5,14 +5,14 @@ import { useEffect, useState } from "react";
 /**
  * WalletRedirectPage
  * Web: /wallet
- * Mobile Deep Link: shopam://wallet
+ * Mobile Deep Link: shopam://profile/wallet
  */
 export default function WalletRedirectPage() {
   const [status, setStatus] = useState("Redirecting you to the ShopAm app...");
 
   useEffect(() => {
     // 1️⃣ Construct the deep link
-    const appLink = `shopam://wallet`;
+    const appLink = `shopam://profile/wallet`;
 
     // 2️⃣ Fallback to Play Store if app not installed
     const storeLink = "https://play.google.com/store/apps/details?id=com.shopam.live";

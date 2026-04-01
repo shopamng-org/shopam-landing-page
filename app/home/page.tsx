@@ -5,14 +5,14 @@ import { useEffect, useState } from "react";
 /**
  * HomeRedirectPage
  * Web: /home
- * Mobile Deep Link: shopam://home
+ * Mobile Deep Link: shopam://
  */
 export default function HomeRedirectPage() {
   const [status, setStatus] = useState("Redirecting you to the ShopAm app...");
 
   useEffect(() => {
     // 1️⃣ Construct the deep link
-    const appLink = `shopam://home`;
+    const appLink = `shopam://`;
 
     // 2️⃣ Fallback to Play Store if app not installed
     const storeLink = "https://play.google.com/store/apps/details?id=com.shopam.live";

@@ -12,7 +12,7 @@ export default function NewSellerProductRedirectPage() {
 
   useEffect(() => {
     // 1️⃣ Construct the deep link
-    const appLink = `shopam://seller/products/new`;
+    const appLink = `shopam://profile/seller/createProduct`;
 
     // 2️⃣ Fallback to Play Store if app not installed
     const storeLink = "https://play.google.com/store/apps/details?id=com.shopam.live";

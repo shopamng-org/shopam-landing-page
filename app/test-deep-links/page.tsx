@@ -17,16 +17,16 @@ export default function TestDeepLinksPage() {
   const links = [
     { title: "Seller Profile", path: `/profile/${testData.sellerId}`, appLink: `shopam://seller-profile/${testData.sellerId}` },
     { title: "Referral", path: `/ref/${testData.referralId}`, appLink: `shopam://register?referral=${testData.referralId}` },
-    { title: "Product", path: `/product/${testData.productId}`, appLink: `shopam://product/${testData.productId}` },
-    { title: "Home Dashboard", path: "/home", appLink: "shopam://home" },
-    { title: "Buyer Order", path: `/order/buyer/${testData.orderId}`, appLink: `shopam://order/buyer/${testData.orderId}` },
-    { title: "Seller Order", path: `/order/seller/${testData.orderId}`, appLink: `shopam://order/seller/${testData.orderId}` },
+    { title: "Product", path: `/product/${testData.productId}`, appLink: `shopam://profile/product/${testData.productId}` },
+    { title: "Home Dashboard", path: "/home", appLink: "shopam://" },
+    { title: "Buyer Order", path: `/order/buyer/${testData.orderId}`, appLink: `shopam://orders/purchaseOrder/${testData.orderId}` },
+    { title: "Seller Order", path: `/order/seller/${testData.orderId}`, appLink: `shopam://orders/soldOrder/${testData.orderId}` },
     { title: "Account", path: "/account", appLink: "shopam://account" },
-    { title: "Wallet", path: "/wallet", appLink: "shopam://wallet" },
-    { title: "Products List", path: "/products", appLink: "shopam://products" },
-    { title: "Seller Products", path: "/seller/products", appLink: "shopam://seller/products" },
-    { title: "Create Seller Product", path: "/seller/products/new", appLink: "shopam://seller/products/new" },
-    { title: "Edit Seller Product", path: `/seller/products/edit/${testData.productId}`, appLink: `shopam://seller/products/edit/${testData.productId}` },
+    { title: "Wallet", path: "/wallet", appLink: "shopam://profile/wallet" },
+    { title: "Products List", path: "/products", appLink: "shopam://profile/product" },
+    { title: "Seller Products", path: "/seller/products", appLink: "shopam://profile/seller/products" },
+    { title: "Create Seller Product", path: "/seller/products/new", appLink: "shopam://profile/seller/createProduct" },
+    { title: "Edit Seller Product", path: `/seller/products/edit/${testData.productId}`, appLink: `shopam://profile/seller/updateProduct?productId=${testData.productId}` },
   ];
 
   return (
