@@ -3,11 +3,20 @@
     "apps": [],
     "details": [
       {
-        "appID": "<YOUR_TEAM_ID>.com.shopam.live",
+        "appID": "3T26GUA8S8.com.shopam.live",
         "paths": [
           "/u/*",
           "/ref/*",
-          "/product/*"
+          "/product/*",
+          "/home",
+          "/order/buyer/*",
+          "/order/seller/*",
+          "/account",
+          "/wallet",
+          "/products",
+          "/seller/products",
+          "/seller/products/new",
+          "/seller/products/edit/*"
         ]
       }
     ]

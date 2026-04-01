@@ -11,7 +11,23 @@ export default function TestDeepLinksPage() {
     sellerId: "8392",
     referralId: "7c89f5",
     productId: "9901",
+    orderId: "ord-12345",
   };
+
+  const links = [
+    { title: "Seller Profile", path: `/profile/${testData.sellerId}`, appLink: `shopam://seller-profile/${testData.sellerId}` },
+    { title: "Referral", path: `/ref/${testData.referralId}`, appLink: `shopam://register?referral=${testData.referralId}` },
+    { title: "Product", path: `/product/${testData.productId}`, appLink: `shopam://product/${testData.productId}` },
+    { title: "Home Dashboard", path: "/home", appLink: "shopam://home" },
+    { title: "Buyer Order", path: `/order/buyer/${testData.orderId}`, appLink: `shopam://order/buyer/${testData.orderId}` },
+    { title: "Seller Order", path: `/order/seller/${testData.orderId}`, appLink: `shopam://order/seller/${testData.orderId}` },
+    { title: "Account", path: "/account", appLink: "shopam://account" },
+    { title: "Wallet", path: "/wallet", appLink: "shopam://wallet" },
+    { title: "Products List", path: "/products", appLink: "shopam://products" },
+    { title: "Seller Products", path: "/seller/products", appLink: "shopam://seller/products" },
+    { title: "Create Seller Product", path: "/seller/products/new", appLink: "shopam://seller/products/new" },
+    { title: "Edit Seller Product", path: `/seller/products/edit/${testData.productId}`, appLink: `shopam://seller/products/edit/${testData.productId}` },
+  ];
 
   return (
     <div className="max-w-4xl mx-auto p-8 pt-28">
@@ -22,78 +38,31 @@ export default function TestDeepLinksPage() {
       </p>
 
       <div className="grid gap-6 md:grid-cols-3">
-        {/* Seller Profile Test */}
-        <div className="p-6 border rounded-xl shadow-sm hover:shadow-md transition-shadow">
-          <h2 className="text-xl font-semibold mb-4 text-orange-600">
-            Seller Profile
-          </h2>
-          <p className="text-sm text-gray-500 mb-4">
-            Path:{" "}
-            <code className="bg-gray-100 p-1">
-              /profile/{testData.sellerId}
-            </code>
-          </p>
-          <Link
-            href={`/profile/${testData.sellerId}`}
-            className="block w-full py-2 px-4 bg-orange-500 text-white text-center rounded-lg hover:bg-orange-600 transition-colors"
-          >
-            Test Profile Link
-          </Link>
-          <div className="mt-4 text-xs text-gray-400">
-            Maps to:{" "}
-            <code className="break-all">
-              shopam://seller-profile/{testData.sellerId}
-            </code>
+        {links.map((link, idx) => (
+          <div key={idx} className="p-6 border rounded-xl shadow-sm hover:shadow-md transition-shadow">
+            <h2 className="text-xl font-semibold mb-4 text-orange-600 truncate" title={link.title}>
+              {link.title}
+            </h2>
+            <p className="text-sm text-gray-500 mb-4 truncate">
+              Path:{" "}
+              <code className="bg-gray-100 p-1">
+                {link.path}
+              </code>
+            </p>
+            <Link
+              href={link.path}
+              className="block w-full py-2 px-4 bg-orange-500 text-white text-center rounded-lg hover:bg-orange-600 transition-colors"
+            >
+              Test Link
+            </Link>
+            <div className="mt-4 text-xs text-gray-400">
+              Maps to:{" "}
+              <code className="break-all">
+                {link.appLink}
+              </code>
+            </div>
           </div>
-        </div>
-
-        {/* Referral Test */}
-        <div className="p-6 border rounded-xl shadow-sm hover:shadow-md transition-shadow">
-          <h2 className="text-xl font-semibold mb-4 text-orange-600">
-            Referral
-          </h2>
-          <p className="text-sm text-gray-500 mb-4">
-            Path:{" "}
-            <code className="bg-gray-100 p-1">/ref/{testData.referralId}</code>
-          </p>
-          <Link
-            href={`/ref/${testData.referralId}`}
-            className="block w-full py-2 px-4 bg-orange-500 text-white text-center rounded-lg hover:bg-orange-600 transition-colors"
-          >
-            Test Referral Link
-          </Link>
-          <div className="mt-4 text-xs text-gray-400">
-            Maps to:{" "}
-            <code className="break-all">
-              shopam://register?referral={testData.referralId}
-            </code>
-          </div>
-        </div>
-
-        {/* Product Test */}
-        <div className="p-6 border rounded-xl shadow-sm hover:shadow-md transition-shadow">
-          <h2 className="text-xl font-semibold mb-4 text-orange-600">
-            Product
-          </h2>
-          <p className="text-sm text-gray-500 mb-4">
-            Path:{" "}
-            <code className="bg-gray-100 p-1">
-              /product/{testData.productId}
-            </code>
-          </p>
-          <Link
-            href={`/product/${testData.productId}`}
-            className="block w-full py-2 px-4 bg-orange-500 text-white text-center rounded-lg hover:bg-orange-600 transition-colors"
-          >
-            Test Product Link
-          </Link>
-          <div className="mt-4 text-xs text-gray-400">
-            Maps to:{" "}
-            <code className="break-all">
-              shopam://product/{testData.productId}
-            </code>
-          </div>
-        </div>
+        ))}
       </div>
 
       <div className="mt-12 p-6 bg-gray-50 rounded-xl border border-dashed border-gray-300">
