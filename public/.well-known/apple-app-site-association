@@ -16,7 +16,8 @@
           "/products",
           "/seller/products",
           "/seller/products/new",
-          "/seller/products/edit/*"
+          "/seller/products/edit/*",
+          "/support"
         ]
       }
     ]

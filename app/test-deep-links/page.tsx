@@ -27,6 +27,7 @@ export default function TestDeepLinksPage() {
     { title: "Seller Products", path: "/seller/products", appLink: "shopam://profile/seller/products" },
     { title: "Create Seller Product", path: "/seller/products/new", appLink: "shopam://profile/seller/createProduct" },
     { title: "Edit Seller Product", path: `/seller/products/edit/${testData.productId}`, appLink: `shopam://profile/seller/updateProduct?productId=${testData.productId}` },
+    { title: "Support", path: "/support", appLink: "shopam://support" },
   ];
 
   return (
