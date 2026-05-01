@@ -9,8 +9,6 @@ import {
   verifyOtpAndDelete,
 } from "@/lib/api/delete-account";
 import { motion, AnimatePresence } from "framer-motion";
-import Image from "next/image";
-import Link from "next/link";
 import { ShieldCheck, Info, CheckCircle2 } from "lucide-react";
 
 type DeletionStep = "REQUEST" | "VERIFY" | "SUCCESS";

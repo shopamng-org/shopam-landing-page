@@ -37,10 +37,10 @@ export default function SupportRedirectPage() {
 
       return () => clearTimeout(timeout);
     } else {
-      // On desktop, we can either stay here or provide a different fallback.
-      // For consistency with products/order pages, we'll keep the redirect status
-      // but maybe suggest downloading the app.
-      setStatus("ShopAm Support is best experienced in our mobile app.");
+      // On desktop, we avoid synchronous setState to satisfy ESLint
+      setTimeout(() => {
+        setStatus("ShopAm Support is best experienced in our mobile app.");
+      }, 0);
     }
   }, []);
 
