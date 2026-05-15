@@ -8,7 +8,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useSmoothScroll } from "./hooks/useSmoothScroll";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
-import ComingSoonModal from "./ComingSoonModal";
 
 // Navigation items - memoized for performance
 const navItems = [
@@ -20,7 +19,6 @@ const navItems = [
 
 export default function ShopAmHeader() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const { scrollToHash } = useSmoothScroll();
   const router = useRouter();
   const pathname = usePathname();
@@ -56,13 +54,10 @@ export default function ShopAmHeader() {
   );
 
   const handleDownloadAppClick = useCallback(() => {
-    setIsModalOpen(true);
+    window.open("https://apps.apple.com/ng/app/shopam/id6760197174", "_blank");
     setIsOpen(false); // Close mobile menu if open
   }, []);
 
-  const handleCloseModal = useCallback(() => {
-    setIsModalOpen(false);
-  }, []);
 
   // Handle scrolling to section after navigation from non-home pages
   useEffect(() => {
@@ -200,8 +195,6 @@ export default function ShopAmHeader() {
         </div>
       </div>
 
-      {/* Coming Soon Modal */}
-      <ComingSoonModal isOpen={isModalOpen} onClose={handleCloseModal} />
     </header>
   );
 }

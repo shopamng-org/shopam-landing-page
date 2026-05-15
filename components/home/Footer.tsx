@@ -119,7 +119,10 @@ export default function NewsletterSection() {
             </div>
 
             {/* Download Button */}
-            <Button className="bg-[#ED8123] hover:bg-[#ED8123]/90 text-white px-4 sm:px-8 py-3 sm:py-4 md:py-6 rounded-lg sm:rounded-xl text-sm sm:text-base font-semibold shadow-lg transition-all duration-200  sm:w-auto">
+            <Button 
+              onClick={() => window.open("https://apps.apple.com/ng/app/shopam/id6760197174", "_blank")}
+              className="bg-[#ED8123] hover:bg-[#ED8123]/90 text-white px-4 sm:px-8 py-3 sm:py-4 md:py-6 rounded-lg sm:rounded-xl text-sm sm:text-base font-semibold shadow-lg transition-all duration-200  sm:w-auto"
+            >
               Download App
             </Button>
           </div>

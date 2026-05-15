@@ -19,8 +19,9 @@ export default function SupportRedirectPage() {
     // This is the internal command recognized by the mobile app
     const appLink = `shopam://support`;
 
-    // 2️⃣ Fallback link (e.g., Play Store or a general info page)
-    const storeLink = "https://play.google.com/store/apps/details?id=com.shopam.live";
+    // 2️⃣ Fallback links
+    const playStoreLink = "https://play.google.com/store/apps/details?id=com.shopam.live";
+    const appStoreLink = "https://apps.apple.com/ng/app/shopam/id6760197174";
 
     // Detect if we are on a mobile device
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
@@ -31,8 +32,14 @@ export default function SupportRedirectPage() {
 
       // Fallback after 2000ms if the app doesn't intercept
       const timeout = setTimeout(() => {
-        setStatus("Opening Play Store...");
-        window.location.href = storeLink;
+        const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+        if (isIOS) {
+          setStatus("Opening App Store...");
+          window.location.href = appStoreLink;
+        } else {
+          setStatus("ShopAm for Android is coming soon!");
+          // Keep it on this page or redirect to a coming soon page
+        }
       }, 2000);
 
       return () => clearTimeout(timeout);
@@ -66,10 +73,10 @@ export default function SupportRedirectPage() {
           <p className="text-sm text-gray-400">
             Don't have the app?{" "}
             <a
-              href="https://play.google.com/store/apps/details?id=com.shopam.live"
+              href="https://apps.apple.com/ng/app/shopam/id6760197174"
               className="text-orange-600 font-medium hover:underline"
             >
-              Download on Play Store
+              Download on App Store
             </a>
           </p>
         </div>

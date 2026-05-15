@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { Button } from "@/components/ui/button";
 
@@ -9,7 +11,10 @@ export default function CallToAction() {
           Ready to Experience the Future of Shopping in Nigeria?
         </h2>
 
-        <Button className="bg-[#ED8123] hover:bg-[#ED8123]/90 text-white font-bold text-sm px-8 py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+        <Button 
+          onClick={() => window.open("https://apps.apple.com/ng/app/shopam/id6760197174", "_blank")}
+          className="bg-[#ED8123] hover:bg-[#ED8123]/90 text-white font-bold text-sm px-8 py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+        >
           Download Free App
         </Button>
       </div>
