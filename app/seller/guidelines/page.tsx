@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState, Suspense } from "react";
+import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
+import { useAppRedirect } from "@/lib/hooks/useAppRedirect";
 
 /**
  * SellerGuidelinesRedirectPage
@@ -11,27 +12,10 @@ import { useSearchParams } from "next/navigation";
 function GuidelinesRedirectContent() {
   const searchParams = useSearchParams();
   const categoryId = searchParams.get("categoryId") || searchParams.get("category");
-  const [status, setStatus] = useState("Redirecting you to the ShopAm guidelines...");
+  const baseLink = "shopam://seller/guidelines";
+  const appLink = categoryId ? `${baseLink}?categoryId=${categoryId}` : baseLink;
 
-  useEffect(() => {
-    // 1️⃣ Construct the deep link
-    const baseLink = "shopam://seller/guidelines";
-    const appLink = categoryId ? `${baseLink}?categoryId=${categoryId}` : baseLink;
-
-    // 2️⃣ Fallback to Play Store if app not installed
-    const storeLink = "https://play.google.com/store/apps/details?id=com.shopam.live";
-
-    // Attempt to open the app
-    window.location.assign(appLink);
-
-    // Fallback after 2000ms
-    const timeout = setTimeout(() => {
-      setStatus("Opening Play Store...");
-      window.location.href = storeLink;
-    }, 2000);
-
-    return () => clearTimeout(timeout);
-  }, [categoryId]);
+  const { status, storeLink } = useAppRedirect(appLink);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-4 text-center font-sans">
@@ -40,7 +24,7 @@ function GuidelinesRedirectContent() {
       <p className="mt-2 text-sm text-gray-500">
         If you are not redirected,{" "}
         <a
-          href="https://play.google.com/store/apps/details?id=com.shopam.live"
+          href={storeLink}
           className="text-orange-600 underline"
         >
           click here

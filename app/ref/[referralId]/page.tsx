@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
+import { useAppRedirect } from "@/lib/hooks/useAppRedirect";
 
 /**
  * Referral Redirect Page
@@ -14,37 +14,11 @@ export default function ReferralPage() {
   const referralId = Array.isArray(params.referralId)
     ? params.referralId[0]
     : params.referralId;
-  const [status, setStatus] = useState("Redirecting you to the ShopAm app...");
 
-  const userAgent = navigator.userAgent || navigator.vendor;
-  console.log("userAgent", userAgent);
-
-  const isAndroid = /android/i.test(userAgent);
-  const isIOS = /iPad|iPhone|iPod/.test(userAgent);
-
-  console.log("isAndroid", isAndroid);
-  console.log("isIOS", isIOS);
-  useEffect(() => {
-    if (!referralId) return;
-
-    // 1️⃣ Construct the deep link
-    const appLink = `shopam://register?referral=${referralId}`;
-
-    // 2️⃣ Fallback to Play Store if app not installed
-    const storeLink =
-      "https://play.google.com/store/apps/details?id=com.shopam.live";
-
-    // Attempt to open the app
-    window.location.assign(appLink);
-
-    // Fallback after 1500ms
-    const timeout = setTimeout(() => {
-      setStatus("Opening Play Store...");
-      window.location.href = storeLink;
-    }, 2000);
-
-    return () => clearTimeout(timeout);
-  }, [referralId]);
+  const { status, storeLink } = useAppRedirect(
+    `shopam://register?referral=${referralId}`,
+    !referralId
+  );
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-4 text-center font-sans">
@@ -53,7 +27,7 @@ export default function ReferralPage() {
       <p className="mt-2 text-sm text-gray-500">
         If you are not redirected,{" "}
         <a
-          href="https://play.google.com/store/apps/details?id=com.shopam.live"
+          href={storeLink}
           className="text-orange-600 underline"
         >
           click here

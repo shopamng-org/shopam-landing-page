@@ -9,22 +9,37 @@ import { useEffect, useState } from "react";
  * 
  * This page acts as a bridge for the "Support" deep link.
  * On mobile, it attempts to trigger the ShopAm app.
- * If the app is not installed, it falls back to the Play Store.
+ * If the app is not installed, it falls back to the App Store or Play Store.
  */
 export default function SupportRedirectPage() {
   const [status, setStatus] = useState("Redirecting you to ShopAm Support...");
+  const [storeLink, setStoreLink] = useState("https://apps.apple.com/ng/app/shopam/id6760197174");
+  const [storeName, setStoreName] = useState("App Store");
 
   useEffect(() => {
     // 1️⃣ Construct the deep link
-    // This is the internal command recognized by the mobile app
     const appLink = `shopam://support`;
 
     // 2️⃣ Fallback links
     const playStoreLink = "https://play.google.com/store/apps/details?id=com.shopam.live";
     const appStoreLink = "https://apps.apple.com/ng/app/shopam/id6760197174";
 
-    // Detect if we are on a mobile device
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    // Detect OS
+    const userAgent = navigator.userAgent || navigator.vendor || "";
+    const isIOS =
+      /iPhone|iPad|iPod/i.test(userAgent) ||
+      (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+    const isAndroid = /Android/i.test(userAgent);
+    const isMobile = isIOS || isAndroid;
+
+    const targetStoreLink = isIOS ? appStoreLink : playStoreLink;
+    const targetStoreName = isIOS ? "App Store" : "Play Store";
+
+    // Defer state updates to satisfy react-hooks/set-state-in-effect
+    setTimeout(() => {
+      setStoreLink(targetStoreLink);
+      setStoreName(targetStoreName);
+    }, 0);
 
     if (isMobile) {
       // Attempt to open the app
@@ -32,14 +47,8 @@ export default function SupportRedirectPage() {
 
       // Fallback after 2000ms if the app doesn't intercept
       const timeout = setTimeout(() => {
-        const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-        if (isIOS) {
-          setStatus("Opening App Store...");
-          window.location.href = appStoreLink;
-        } else {
-          setStatus("ShopAm for Android is coming soon!");
-          // Keep it on this page or redirect to a coming soon page
-        }
+        setStatus(`Opening ${targetStoreName}...`);
+        window.location.href = targetStoreLink;
       }, 2000);
 
       return () => clearTimeout(timeout);
@@ -73,10 +82,10 @@ export default function SupportRedirectPage() {
           <p className="text-sm text-gray-400">
             Don't have the app?{" "}
             <a
-              href="https://apps.apple.com/ng/app/shopam/id6760197174"
+              href={storeLink}
               className="text-orange-600 font-medium hover:underline"
             >
-              Download on App Store
+              Download on {storeName}
             </a>
           </p>
         </div>

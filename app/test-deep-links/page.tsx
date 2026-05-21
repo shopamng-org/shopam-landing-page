@@ -1,12 +1,48 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 /**
  * Test Deep Links Page
  * Allows manual testing of deep linking redirection logic.
  */
 export default function TestDeepLinksPage() {
+  const [debugInfo, setDebugInfo] = useState<{
+    userAgent: string;
+    platform: string;
+    maxTouchPoints: number;
+    detectedOS: string;
+    fallbackStore: string;
+  } | null>(null);
+
+  useEffect(() => {
+    const userAgent = navigator.userAgent || navigator.vendor || "";
+    const platform = navigator.platform || "";
+    const maxTouchPoints = navigator.maxTouchPoints || 0;
+
+    const isIOS =
+      /iPad|iPhone|iPod/i.test(userAgent) ||
+      (platform === "MacIntel" && maxTouchPoints > 1);
+
+    const isAndroid = /Android/i.test(userAgent);
+
+    const detectedOS = isIOS ? "iOS" : isAndroid ? "Android" : "Desktop/Other";
+    const fallbackStore = isIOS
+      ? "https://apps.apple.com/ng/app/shopam/id6760197174 (App Store)"
+      : "https://play.google.com/store/apps/details?id=com.shopam.live (Play Store)";
+
+    setTimeout(() => {
+      setDebugInfo({
+        userAgent,
+        platform,
+        maxTouchPoints,
+        detectedOS,
+        fallbackStore,
+      });
+    }, 0);
+  }, []);
+
   const testData = {
     sellerId: "8392",
     referralId: "7c89f5",
@@ -37,8 +73,59 @@ export default function TestDeepLinksPage() {
       <h1 className="text-3xl font-bold mb-6">Deep Link Test Page</h1>
       <p className="mb-8 text-gray-600">
         Use the buttons below to test the redirection pages. These will attempt
-        to open the Shopam mobile app or fallback to the Play Store.
+        to open the Shopam mobile app or fallback to the App Store (iOS) or Play Store (Android).
       </p>
+
+      {debugInfo && (
+        <div className="mb-8 p-6 bg-gradient-to-br from-orange-50 to-amber-50 rounded-2xl border border-orange-200 shadow-sm">
+          <div className="flex items-center gap-2 mb-4">
+            <span className="flex h-3.5 w-3.5 relative">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-emerald-500"></span>
+            </span>
+            <h3 className="text-lg font-bold text-orange-950">
+              Live Device Diagnostics
+            </h3>
+          </div>
+          <div className="grid gap-3 text-sm md:grid-cols-2 text-gray-700">
+            <div className="bg-white/60 p-3 rounded-lg border border-orange-100">
+              <span className="block font-semibold text-orange-900 mb-1">Detected OS:</span>
+              <span className={`px-2 py-0.5 rounded font-mono text-xs font-semibold ${
+                debugInfo.detectedOS === "iOS" 
+                  ? "bg-blue-100 text-blue-800" 
+                  : debugInfo.detectedOS === "Android" 
+                    ? "bg-emerald-100 text-emerald-800" 
+                    : "bg-gray-100 text-gray-800"
+              }`}>
+                {debugInfo.detectedOS}
+              </span>
+            </div>
+            <div className="bg-white/60 p-3 rounded-lg border border-orange-100">
+              <span className="block font-semibold text-orange-900 mb-1">Target Fallback Link:</span>
+              <code className="text-xs break-all bg-gray-50 p-1 rounded border border-gray-100 block">
+                {debugInfo.fallbackStore}
+              </code>
+            </div>
+            <div className="bg-white/60 p-3 rounded-lg border border-orange-100 md:col-span-2">
+              <span className="block font-semibold text-orange-900 mb-1">User Agent:</span>
+              <code className="text-xs break-all bg-gray-50 p-1 rounded border border-gray-100 block">
+                {debugInfo.userAgent}
+              </code>
+            </div>
+            <div className="bg-white/60 p-3 rounded-lg border border-orange-100">
+              <span className="block font-semibold text-orange-900 mb-1">Platform:</span>
+              <code className="text-xs">{debugInfo.platform}</code>
+            </div>
+            <div className="bg-white/60 p-3 rounded-lg border border-orange-100">
+              <span className="block font-semibold text-orange-900 mb-1">Max Touch Points:</span>
+              <code className="text-xs">{debugInfo.maxTouchPoints}</code>
+            </div>
+          </div>
+          <div className="mt-4 text-xs text-orange-800/70 border-t border-orange-100 pt-3">
+            <strong>Diagnostic Version:</strong> v1.1.0 (Enhanced iOS & iPadOS Detection)
+          </div>
+        </div>
+      )}
 
       <div className="grid gap-6 md:grid-cols-3">
         {links.map((link, idx) => (
@@ -81,7 +168,7 @@ export default function TestDeepLinksPage() {
           </li>
           <li>
             If the app is NOT installed, the page will show "Redirecting..." for
-            2 seconds and then navigate to the Google Play Store.
+            2 seconds and then navigate to the dynamic store fallback (App Store for iOS, Play Store for Android).
           </li>
         </ul>
       </div>

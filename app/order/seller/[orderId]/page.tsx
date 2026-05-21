@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
+import { useAppRedirect } from "@/lib/hooks/useAppRedirect";
 
 /**
  * SellerOrderRedirectPage
@@ -11,28 +11,11 @@ import { useParams } from "next/navigation";
 export default function SellerOrderRedirectPage() {
   const params = useParams();
   const orderId = Array.isArray(params.orderId) ? params.orderId[0] : params.orderId;
-  const [status, setStatus] = useState("Redirecting you to the ShopAm app...");
 
-  useEffect(() => {
-    if (!orderId) return;
-
-    // 1️⃣ Construct the deep link
-    const appLink = `shopam://orders/soldOrder/${orderId}`;
-
-    // 2️⃣ Fallback to Play Store if app not installed
-    const storeLink = "https://play.google.com/store/apps/details?id=com.shopam.live";
-
-    // Attempt to open the app
-    window.location.assign(appLink);
-
-    // Fallback after 2000ms
-    const timeout = setTimeout(() => {
-      setStatus("Opening Play Store...");
-      window.location.href = storeLink;
-    }, 2000);
-
-    return () => clearTimeout(timeout);
-  }, [orderId]);
+  const { status, storeLink } = useAppRedirect(
+    `shopam://orders/soldOrder/${orderId}`,
+    !orderId
+  );
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-4 text-center font-sans">
@@ -41,7 +24,7 @@ export default function SellerOrderRedirectPage() {
       <p className="mt-2 text-sm text-gray-500">
         If you are not redirected,{" "}
         <a
-          href="https://play.google.com/store/apps/details?id=com.shopam.live"
+          href={storeLink}
           className="text-orange-600 underline"
         >
           click here

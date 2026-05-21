@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useAppRedirect } from "@/lib/hooks/useAppRedirect";
 
 /**
  * HomeRedirectPage
@@ -8,26 +8,7 @@ import { useEffect, useState } from "react";
  * Mobile Deep Link: shopam://
  */
 export default function HomeRedirectPage() {
-  const [status, setStatus] = useState("Redirecting you to the ShopAm app...");
-
-  useEffect(() => {
-    // 1️⃣ Construct the deep link
-    const appLink = `shopam://`;
-
-    // 2️⃣ Fallback to Play Store if app not installed
-    const storeLink = "https://play.google.com/store/apps/details?id=com.shopam.live";
-
-    // Attempt to open the app
-    window.location.assign(appLink);
-
-    // Fallback after 2000ms
-    const timeout = setTimeout(() => {
-      setStatus("Opening Play Store...");
-      window.location.href = storeLink;
-    }, 2000);
-
-    return () => clearTimeout(timeout);
-  }, []);
+  const { status, storeLink } = useAppRedirect("shopam://");
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-4 text-center font-sans">
@@ -36,7 +17,7 @@ export default function HomeRedirectPage() {
       <p className="mt-2 text-sm text-gray-500">
         If you are not redirected,{" "}
         <a
-          href="https://play.google.com/store/apps/details?id=com.shopam.live"
+          href={storeLink}
           className="text-orange-600 underline"
         >
           click here

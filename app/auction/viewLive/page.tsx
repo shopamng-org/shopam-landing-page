@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState, Suspense } from "react";
+import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
+import { useAppRedirect } from "@/lib/hooks/useAppRedirect";
 
 /**
  * Live Stream Redirect Page
@@ -11,29 +12,11 @@ import { useSearchParams } from "next/navigation";
 function AuctionRedirectContent() {
   const searchParams = useSearchParams();
   const streamId = searchParams.get("id");
-  const [status, setStatus] = useState("Redirecting you to the ShopAm app...");
 
-  useEffect(() => {
-    if (!streamId) return;
-
-    // 1️⃣ Construct the deep link
-    const appLink = `shopam://auction/viewLive?id=${streamId}`;
-
-    // 2️⃣ Fallback to Play Store if app not installed
-    const storeLink =
-      "https://play.google.com/store/apps/details?id=com.shopam.live";
-
-    // Attempt to open the app
-    window.location.assign(appLink);
-
-    // Fallback after 2000ms
-    const timeout = setTimeout(() => {
-      setStatus("Opening Play Store...");
-      window.location.href = storeLink;
-    }, 2000);
-
-    return () => clearTimeout(timeout);
-  }, [streamId]);
+  const { status, storeLink } = useAppRedirect(
+    `shopam://auction/viewLive?id=${streamId}`,
+    !streamId
+  );
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-4 text-center font-sans">
@@ -42,7 +25,7 @@ function AuctionRedirectContent() {
       <p className="mt-2 text-sm text-gray-500">
         If you are not redirected,{" "}
         <a
-          href="https://play.google.com/store/apps/details?id=com.shopam.live"
+          href={storeLink}
           className="text-orange-600 underline"
         >
           click here

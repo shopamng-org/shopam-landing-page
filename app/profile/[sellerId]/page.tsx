@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
+import { useAppRedirect } from "@/lib/hooks/useAppRedirect";
 
 /**
  * Seller Profile Redirect Page
@@ -14,29 +14,11 @@ export default function ProfileRedirectPage() {
   const sellerId = Array.isArray(params.sellerId)
     ? params.sellerId[0]
     : params.sellerId;
-  const [status, setStatus] = useState("Redirecting you to the ShopAm app...");
 
-  useEffect(() => {
-    if (!sellerId) return;
-
-    // 1️⃣ Construct the deep link
-    const appLink = `shopam://seller-profile/${sellerId}`;
-
-    // 2️⃣ Fallback to Play Store if app not installed
-    const storeLink =
-      "https://play.google.com/store/apps/details?id=com.shopam.live";
-
-    // Attempt to open the app
-    window.location.assign(appLink);
-
-    // Fallback after 1500ms
-    const timeout = setTimeout(() => {
-      setStatus("Opening Play Store...");
-      window.location.href = storeLink;
-    }, 2000);
-
-    return () => clearTimeout(timeout);
-  }, [sellerId]);
+  const { status, storeLink } = useAppRedirect(
+    `shopam://seller-profile/${sellerId}`,
+    !sellerId
+  );
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-4 text-center font-sans">
@@ -45,7 +27,7 @@ export default function ProfileRedirectPage() {
       <p className="mt-2 text-sm text-gray-500">
         If you are not redirected,{" "}
         <a
-          href="https://play.google.com/store/apps/details?id=com.shopam.live"
+          href={storeLink}
           className="text-orange-600 underline"
         >
           click here
