@@ -54,7 +54,12 @@ export default function ShopAmHeader() {
   );
 
   const handleDownloadAppClick = useCallback(() => {
-    window.open("https://apps.apple.com/ng/app/shopam/id6760197174", "_blank");
+    const userAgent = typeof navigator !== "undefined" ? navigator.userAgent || navigator.vendor || "" : "";
+    const isIOS = /iPad|iPhone|iPod/i.test(userAgent) || (typeof navigator !== "undefined" && navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+    const storeLink = isIOS 
+      ? "https://apps.apple.com/ng/app/shopam/id6760197174" 
+      : "https://play.google.com/store/apps/details?id=com.shopam.live";
+    window.open(storeLink, "_blank");
     setIsOpen(false); // Close mobile menu if open
   }, []);
 

@@ -21,6 +21,15 @@ export default function NewsletterSection() {
     }
   };
 
+  const handleDownloadAppClick = () => {
+    const userAgent = typeof navigator !== "undefined" ? navigator.userAgent || navigator.vendor || "" : "";
+    const isIOS = /iPad|iPhone|iPod/i.test(userAgent) || (typeof navigator !== "undefined" && navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+    const storeLink = isIOS 
+      ? "https://apps.apple.com/ng/app/shopam/id6760197174" 
+      : "https://play.google.com/store/apps/details?id=com.shopam.live";
+    window.open(storeLink, "_blank");
+  };
+
   return (
     <div className="bg-neutral-800 flex flex-col">
       {/* Main Content Area */}
@@ -120,7 +129,7 @@ export default function NewsletterSection() {
 
             {/* Download Button */}
             <Button 
-              onClick={() => window.open("https://apps.apple.com/ng/app/shopam/id6760197174", "_blank")}
+              onClick={handleDownloadAppClick}
               className="bg-[#ED8123] hover:bg-[#ED8123]/90 text-white px-4 sm:px-8 py-3 sm:py-4 md:py-6 rounded-lg sm:rounded-xl text-sm sm:text-base font-semibold shadow-lg transition-all duration-200  sm:w-auto"
             >
               Download App

@@ -4,6 +4,15 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 
 export default function CallToAction() {
+  const handleDownloadAppClick = () => {
+    const userAgent = typeof navigator !== "undefined" ? navigator.userAgent || navigator.vendor || "" : "";
+    const isIOS = /iPad|iPhone|iPod/i.test(userAgent) || (typeof navigator !== "undefined" && navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+    const storeLink = isIOS 
+      ? "https://apps.apple.com/ng/app/shopam/id6760197174" 
+      : "https://play.google.com/store/apps/details?id=com.shopam.live";
+    window.open(storeLink, "_blank");
+  };
+
   return (
     <section className="hidden md:block pb-6 md:py-8 bg-white">
       <div className="mx-auto px-4 md:px-6 lg:px-8 text-center">
@@ -12,7 +21,7 @@ export default function CallToAction() {
         </h2>
 
         <Button 
-          onClick={() => window.open("https://apps.apple.com/ng/app/shopam/id6760197174", "_blank")}
+          onClick={handleDownloadAppClick}
           className="bg-[#ED8123] hover:bg-[#ED8123]/90 text-white font-bold text-sm px-8 py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
         >
           Download Free App

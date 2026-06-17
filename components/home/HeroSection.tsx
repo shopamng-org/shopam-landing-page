@@ -1,11 +1,10 @@
 "use client";
 
-import React, { memo, useState, useCallback } from "react";
+import React, { memo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, useReducedMotion, Variants } from "framer-motion";
 import { useScrollAnimation } from "./hooks/useScrollAnimation";
-import ComingSoonModal from "../shared/ComingSoonModal";
 
 // TypeScript interfaces
 interface HeroSectionProps {
@@ -116,7 +115,7 @@ const imageVariants: Variants = {
 // Constants for better maintainability
 const APP_STORE_CONFIG = {
   appleHref: "https://apps.apple.com/ng/app/shopam/id6760197174",
-  googleHref: "#",
+  googleHref: "https://play.google.com/store/apps/details?id=com.shopam.live",
   iconSize: "w-7 h-7 md:w-8 md:h-8",
   containerPadding: "px-3 md:px-4",
   buttonPadding: "py-1 md:py-2",
@@ -270,7 +269,7 @@ const AppStoreButton = memo<AppStoreButtonProps>(
 
 AppStoreButton.displayName = "AppStoreButton";
 
-const AppStoreButtons = memo(({ onGooglePlayClick }: { onGooglePlayClick: () => void }) => {
+const AppStoreButtons = memo(() => {
   const { ref, isVisible } = useScrollAnimation(0.2, "-50px");
 
   return (
@@ -300,10 +299,9 @@ const AppStoreButtons = memo(({ onGooglePlayClick }: { onGooglePlayClick: () => 
         </div>
       </AppStoreButton>
 
-      <button
-        onClick={onGooglePlayClick}
-        className="md:flex-1 inline-flex items-center justify-center bg-black text-white rounded-md md:rounded-xl px-3 md:px-4 py-1 md:py-2 hover:bg-gray-900 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
-        aria-label="Get it on Google Play"
+      <AppStoreButton
+        href={APP_STORE_CONFIG.googleHref}
+        ariaLabel="Get it on Google Play"
       >
         <GooglePlayIcon />
         <div className={APP_STORE_CONFIG.margin}>
@@ -318,7 +316,7 @@ const AppStoreButtons = memo(({ onGooglePlayClick }: { onGooglePlayClick: () => 
             Google Play
           </div>
         </div>
-      </button>
+      </AppStoreButton>
     </motion.div>
   );
 });
@@ -471,16 +469,6 @@ HeroImage.displayName = "HeroImage";
 
 // Main component
 const HeroSection = memo<HeroSectionProps>(({ className }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const handleGooglePlayClick = useCallback(() => {
-    setIsModalOpen(true);
-  }, []);
-
-  const handleCloseModal = useCallback(() => {
-    setIsModalOpen(false);
-  }, []);
-
   return (
     <motion.div
       className={`flex flex-col items-center md:flex-row md:justify-center pb-16 w-full ${
@@ -495,12 +483,11 @@ const HeroSection = memo<HeroSectionProps>(({ className }) => {
         <div className="mx-auto w-full">
           <Heading />
           <Subheading />
-          <AppStoreButtons onGooglePlayClick={handleGooglePlayClick} />
+          <AppStoreButtons />
           <Stats />
         </div>
       </section>
       <HeroImage />
-      <ComingSoonModal isOpen={isModalOpen} onClose={handleCloseModal} />
     </motion.div>
   );
 });
